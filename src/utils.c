@@ -16,6 +16,15 @@ float d_f(float x){
 	return 4*pow(x,3) - 9*pow(x,2) ;
 }
 
+
+/**
+* MSE (Mean Square Error) function
+* @param y_pred : The predicted values
+* @param y : Real values
+* @param n : y_pred and y length
+* @description : This function compute the MSE beetwen the real and  predicted values
+* @return: The MSE beetwen y_pred, y *
+*/
 float MSE(double *y_pred , double *y, int n) {
 
 	float diff, sum_sq = 0.0 ;
@@ -31,6 +40,14 @@ float MSE(double *y_pred , double *y, int n) {
 }
 
 
+/**
+* prediction function
+* @param X : double array represent the dependent variable
+* @param theta : double array were thetha[0] a.k.a (a) is a slope and thetha[1] a.k.a (b) is the intercept
+* @param n : X length
+* @description : This function compute the independent variables with the actual theta parameters
+* @return : Compute and return y = aX + b *
+*/
 double* prediction(double* X, double *theta, int n){
 
 	double* Y = malloc(sizeof(double)*n) ;
@@ -44,6 +61,17 @@ double* prediction(double* X, double *theta, int n){
 
 }
 
+
+/**
+* prediction grad_descent
+* @param y_pred : The predicted values
+* @param y : Real values
+* @param x : double array represent the dependent variable
+* @param theta : double array parameters were thetha[0] a.k.a (a) is a slope and thetha[1] a.k.a (b) is the intercept
+* @param n : y_pred , y and x length
+* @description : the gradient descent algoritm to update the parameters
+* @return : void function, he juste update the theta array parameters *
+*/
 void grad_descent(double *y_pred , double *y, double *x , double *theta , int n){
 
 	

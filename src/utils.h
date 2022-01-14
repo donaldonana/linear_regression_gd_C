@@ -12,21 +12,17 @@
 
 
 
-
-
 void grad_descent(double *y_pred , double *y, double *x , double *theta , int n);
 
-void cost();
-
-double costfunction();
-
 double* prediction(double* X, double *theta, int n);
+
+float MSE(double *y_pred , double *y, int n) ; 
 
 float f( float x ) ; 
 
 float d_f(float x) ;
 
-float MSE(double *y_pred , double *y, int n) ; 
+
 
 
 

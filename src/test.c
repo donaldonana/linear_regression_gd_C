@@ -4,17 +4,15 @@
 
 int main()
 {
-   // int nbrcouchecache = 5;
-   // int* tcc = malloc(sizeof(int)*5);
-   // int* fa = malloc(sizeof(int)*5);
-   // int tds = 3;
-   // int nbr_iterations = 100;
-   // double*** poids = (double***)calloc(4, sizeof(double**));
-
-   // PMC* pmc = initialiser( nbrcouchecache,  tcc,  fa,  tds, nbr_iterations, poids);
-
-   // printf("hello world\n");
-   // printf("%d\n", pmc->NbrIterations );
+   
+   // int loop = 500 ;
+    // float x, alpha = 0.005 ; 
+    // x = 0.1 ; 
+    // for (int i = 0; i < loop; ++i)
+    // {
+    //   x = x - alpha*d_f(x);
+    // }
+   
    int b = 4;
    printf("%f\n", 2.0/b);
 }
