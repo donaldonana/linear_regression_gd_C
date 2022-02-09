@@ -23,8 +23,8 @@ float d_f(float x){
 * @param y : Real values
 * @param n : y_pred and y length
 * @description : This function compute the MSE beetwen the real and  predicted values
-* @return: The MSE beetwen y_pred, y *
-*/
+* @return: The MSE beetwen y_pred, y 
+**/
 float MSE(double *y_pred , double *y, int n) {
 
 	float diff, sum_sq = 0.0 ;
@@ -46,8 +46,8 @@ float MSE(double *y_pred , double *y, int n) {
 * @param theta : double array were thetha[0] a.k.a (a) is a slope and thetha[1] a.k.a (b) is the intercept
 * @param n : X length
 * @description : This function compute the independent variables with the actual theta parameters
-* @return : Compute and return y = aX + b *
-*/
+* @return : Compute and return y = aX + b 
+**/
 double* prediction(double* X, double *theta, int n){
 
 	double* Y = malloc(sizeof(double)*n) ;
@@ -100,4 +100,73 @@ void grad_descent(double *y_pred , double *y, double *x , double *theta , int n)
 	theta[1] = ( theta[1] - ((LEARNING_RATE)*db) );
 	printf("Theta0: %lf Theta1: %lf",theta[0],theta[1]);
 	
+}
+
+
+float **allocate_dynamic_float_matrix(int row, int col)
+{
+    float **ret_val;
+    int i;
+
+    ret_val = malloc(sizeof(float *) * row);
+    if (ret_val == NULL)
+    {
+        perror("memory allocation failure");
+        exit(EXIT_FAILURE);
+    }
+
+    for (i = 0; i < row; ++i)
+    {
+        ret_val[i] = malloc(sizeof(float) * col);
+        if (ret_val[i] == NULL)
+        {
+            perror("memory allocation failure");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    return ret_val;
+}
+
+void deallocate_dynamic_float_matrix(float **matrix, int row)
+{
+    int i;
+
+    for (i = 0; i < row; ++i)
+    {
+        free(matrix[i]);
+    }
+    free(matrix);
+}
+
+
+float **bacht_data(double *y, double *x , int bacht_size, int n) 
+{
+	
+	int num_bacht, i = -1;
+	num_bacht = n / bacht_size;
+	float **bacht_y = allocate_dynamic_float_matrix(num_bacht, bacht_size);
+	float **bacht_x = allocate_dynamic_float_matrix(num_bacht, bacht_size);
+	
+	for(int row = 0 ; row < num_bacht ; row++)
+	{
+	
+		for( int col = 0 ; col < bacht_size;  col++)
+		{
+			i = i + 1;
+			bacht_y[row][col] = y[i];
+			bacht_x[row][col] = x[i];
+			
+		}
+	
+	
+	}
+	
+	return bacht_y ;
+
+
+
+
+
+
 }

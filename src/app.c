@@ -47,25 +47,25 @@ int main()
     *                            *
     ******************************
     **/
-	printf("Training parameters using Gradient Descent..\n\n");
+    printf("Training parameters using Gradient Descent..\n\n");
     
-	double* y_pred = prediction(x, theta, DATA_SIZE);
+    double* y_pred = prediction(x, theta, DATA_SIZE);
     cost=MSE(y_pred, y, (int)total_samples);
-    printf("%lf\n", cost);
+    printf("-----Initialisation with Theta0: %lf Theta1: %lf Cost: %lf-----\n", theta[0], theta[1], cost);
 
     while(epoch < total_epochs){
 
         grad_descent(y_pred, y, x, theta, (double)total_samples);
         y_pred = prediction(x, theta, DATA_SIZE);
         cost=MSE(y_pred, y, (int)total_samples);
-        printf("\nEpoch: %d Cost: %lf Theta0: %lf Theta1: %lf \n",epoch,cost,theta[0],theta[1]);
+        printf("\nEpoch: %d Theta0: %lf Theta1: %lf Cost: %lf \n",epoch,theta[0],theta[1],cost);
         epoch++;
 
     }
 
 
     printf("\n\n\n Results after %d iterations",epoch);
-	printf("\n\tTheta0 (a) : %lf    Theta1 (b) :  %lf    MSE :  %lf", theta[0],theta[1],cost);
+    printf("\n\tTheta0 (a) : %lf    Theta1 (b) :  %lf    MSE :  %lf \n", theta[0],theta[1],cost);
 
 
     

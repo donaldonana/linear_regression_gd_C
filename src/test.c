@@ -13,7 +13,12 @@ int main()
     //   x = x - alpha*d_f(x);
     // }
    
-   int b = 4;
-   printf("%f\n", 2.0/b);
+   double y[5] = {1 , 2 , 3 , 4 };
+   double x[5] = {1 , 2 , 3 , 4 };
+   
+   float **bacht_y = bacht_data(y, x , 2, 4) ;
+   
+printf("%lf",bacht_y[1][1]);
+   
 }
 	
