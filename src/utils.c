@@ -23,7 +23,7 @@ float d_f(float x){
 * @param y : Real values
 * @param n : y_pred and y length
 * @description : This function compute the MSE beetwen the real and  predicted values
-* @return: The MSE beetwen y_pred, y 
+* @return: The MSE beetwen y_pred, y
 **/
 float MSE(double *y_pred , double *y, int n) {
 
@@ -46,7 +46,7 @@ float MSE(double *y_pred , double *y, int n) {
 * @param theta : double array were thetha[0] a.k.a (a) is a slope and thetha[1] a.k.a (b) is the intercept
 * @param n : X length
 * @description : This function compute the independent variables with the actual theta parameters
-* @return : Compute and return y = aX + b 
+* @return : Compute and return y = aX + b
 **/
 double* prediction(double* X, double *theta, int n){
 
@@ -74,8 +74,8 @@ double* prediction(double* X, double *theta, int n){
 */
 void grad_descent(double *y_pred , double *y, double *x , double *theta , int n){
 
-	
-	double da , db ; 
+
+	double da , db ;
 	double suma = 0.0 , sumb = 0.0 ;
 
 	// double* params = malloc(sizeof(double)*2);
@@ -83,7 +83,7 @@ void grad_descent(double *y_pred , double *y, double *x , double *theta , int n)
 	for (int i = 0; i < n; ++i)
 	{
 		// printf("----%lf----\n", (y_pred[i] - y[i]));
-		suma += ( (y[i] - y_pred[i]) ) ; 
+		suma += ( (y[i] - y_pred[i]) ) ;
 	}
 
 	for (int i = 0; i < n; ++i)
@@ -99,16 +99,16 @@ void grad_descent(double *y_pred , double *y, double *x , double *theta , int n)
 	theta[0] = ( theta[0] - ((LEARNING_RATE)*da) );
 	theta[1] = ( theta[1] - ((LEARNING_RATE)*db) );
 	printf("Theta0: %lf Theta1: %lf",theta[0],theta[1]);
-	
+
 }
 
 
-float **allocate_dynamic_float_matrix(int row, int col)
+double **allocate_dynamic_float_matrix(int row, int col)
 {
-    float **ret_val;
+    double **ret_val;
     int i;
 
-    ret_val = malloc(sizeof(float *) * row);
+    ret_val = malloc(sizeof(double *) * row);
     if (ret_val == NULL)
     {
         perror("memory allocation failure");
@@ -117,7 +117,7 @@ float **allocate_dynamic_float_matrix(int row, int col)
 
     for (i = 0; i < row; ++i)
     {
-        ret_val[i] = malloc(sizeof(float) * col);
+        ret_val[i] = malloc(sizeof(double) * col);
         if (ret_val[i] == NULL)
         {
             perror("memory allocation failure");
@@ -140,31 +140,32 @@ void deallocate_dynamic_float_matrix(float **matrix, int row)
 }
 
 
-float **bacht_data(double *y, double *x , int bacht_size, int n) 
+double ***bacht_data(double *y, double *x , int bacht_size, int n)
 {
-	
+
 	int num_bacht, i = -1;
 	num_bacht = n / bacht_size;
-	float **bacht_y = allocate_dynamic_float_matrix(num_bacht, bacht_size);
-	float **bacht_x = allocate_dynamic_float_matrix(num_bacht, bacht_size);
-	
+	double **bacht_y = allocate_dynamic_float_matrix(num_bacht, bacht_size);
+	double **bacht_x = allocate_dynamic_float_matrix(num_bacht, bacht_size);
+	double ***ret_vec = malloc(sizeof(float**)*2);
+
 	for(int row = 0 ; row < num_bacht ; row++)
 	{
-	
+
 		for( int col = 0 ; col < bacht_size;  col++)
 		{
 			i = i + 1;
 			bacht_y[row][col] = y[i];
 			bacht_x[row][col] = x[i];
-			
+
 		}
-	
-	
+
+
 	}
-	
-	return bacht_y ;
+	ret_vec[0] = bacht_y;
+	ret_vec[1] = bacht_x;
 
-
+	return ret_vec ;
 
 
 

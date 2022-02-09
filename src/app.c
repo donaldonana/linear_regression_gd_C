@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include "utils.h"
 
-double theta[]={0.0,0.0};                        
+double theta[]={0.0,0.0};
 int total_samples = DATA_SIZE;
 double x[DATA_SIZE], y[DATA_SIZE];
 
 int main()
 {
-    
+
     int epoch=0,total_epochs = EPOCHS;
 	double cost;
     int count = 0;
@@ -31,8 +31,6 @@ int main()
 
         count = count+1;
     }
-
-
     // Uncomment to display loaded data
     // for (int i = 0; i < (int)total_samples; i++) {
     //   printf(" x[%d]:%lf , y[%d]:%lf\n", i,x[i], i,y[i]);
@@ -47,8 +45,17 @@ int main()
     *                            *
     ******************************
     **/
+
+
+    // float ***bacht_datas = bacht_data(y, x , BACHT_SIZE, DATA_SIZE) ;
+    // float **bacht_y = bacht_datas[0];
+    // float **bacht_x = bacht_datas[1];
+    //
+    // int num_bacht = DATA_SIZE / BACHT_SIZE ;
+
+
     printf("Training parameters using Gradient Descent..\n\n");
-    
+
     double* y_pred = prediction(x, theta, DATA_SIZE);
     cost=MSE(y_pred, y, (int)total_samples);
     printf("-----Initialisation with Theta0: %lf Theta1: %lf Cost: %lf-----\n", theta[0], theta[1], cost);
@@ -66,9 +73,9 @@ int main()
 
     printf("\n\n\n Results after %d iterations",epoch);
     printf("\n\tTheta0 (a) : %lf    Theta1 (b) :  %lf    MSE :  %lf \n", theta[0],theta[1],cost);
+    //
 
 
-    
 
 	return 0 ;
 
