@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "utils.h"
+#include <time.h>
 
 
 
@@ -25,18 +26,18 @@ float d_f(float x){
 * @description : This function compute the MSE beetwen the real and  predicted values
 * @return: The MSE beetwen y_pred, y
 **/
-float MSE(double *y_pred , double *y, int n) {
+double MSE(double *y_pred , double *y, double n) {
 
-	float diff, sum_sq = 0.0 ;
+	double diff, sum_sq = 0.00 ;
 
 	for (int i = 0; i < n; ++i)
 	{
-		diff = y_pred[i] - y[i] ;
+		diff = y[i] - y_pred[i] ;
 		sum_sq += pow(diff,2) ;
 
 	}
 
-	return sum_sq / n ;
+	return (sum_sq / n );
 }
 
 
@@ -54,10 +55,17 @@ double* prediction(double* X, double *theta, int n){
 
 	for (int i = 0; i < n; ++i)
 	{
-		Y[i] = theta[0] + theta[1]*X[i];
+		Y[i] = (theta[0] + (theta[1]*X[i]));
+		// if (i<2) {
+		// 	// printf("\n theta[0]=%lf theta[1] = %lf, Xi = %lf, Yi = %lf \n", theta[0], theta[1],  X[i], 	Y[i]  );
+		// }
+
 	}
 
+
+
 	return Y;
+
 
 }
 
@@ -72,35 +80,106 @@ double* prediction(double* X, double *theta, int n){
 * @description : the gradient descent algoritm to update the parameters
 * @return : void function, he juste update the theta array parameters *
 */
-void grad_descent(double *y_pred , double *y, double *x , double *theta , int n){
+void grad_descent(double *y_pred , double *y, double *x , double *theta , double n){
 
 
-	double da , db ;
-	double suma = 0.0 , sumb = 0.0 ;
+	double da , db , diff;
+	double suma = 0.000 , sumb = 0.000 ;
 
 	// double* params = malloc(sizeof(double)*2);
 
 	for (int i = 0; i < n; ++i)
 	{
 		// printf("----%lf----\n", (y_pred[i] - y[i]));
-		suma += ( (y[i] - y_pred[i]) ) ;
+		diff = y[i] - y_pred[i];
+		suma = (suma + diff) ;
+		sumb = sumb + ( x[i]*(diff) );
+		// printf("%lf\n", y_pred[i]);
 	}
 
-	for (int i = 0; i < n; ++i)
-	{
-		sumb = ( sumb + (x[i]*(y[i] - y_pred[i])) );
-	}
+	da = ( (-2.000/(double)n) * (suma) );
+	db = ( (-2.000/(double)n) * (sumb) );
 
-	da = ( (-2.0/(double)n) * (suma) );
-	db = ( (-2.0/(double)n) * (sumb) );
+	// printf("(%lf)---(%lf)\n", da, db);
 
-	// printf("%lf---%lf\n", da, db);
 
 	theta[0] = ( theta[0] - ((LEARNING_RATE)*da) );
 	theta[1] = ( theta[1] - ((LEARNING_RATE)*db) );
 	printf("Theta0: %lf Theta1: %lf",theta[0],theta[1]);
 
 }
+
+
+
+double ***bacht_data(double *y, double *x , int bacht_size, int n)
+{
+
+	int num_bacht, i = -1;
+	num_bacht = n / bacht_size;
+	int index[n];
+
+	for (int k = 0;  k < n; k++) {
+		index[k] = k ;
+	}
+
+
+	randomize(index, n);
+
+	double **bacht_y = allocate_dynamic_float_matrix(num_bacht, bacht_size);
+	double **bacht_x = allocate_dynamic_float_matrix(num_bacht, bacht_size);
+	double ***ret_vec = malloc(sizeof(double**)*2);
+
+	for(int row = 0 ; row < num_bacht ; row++)
+	{
+
+		for( int col = 0 ; col < bacht_size;  col++)
+		{
+			i = i + 1;
+			bacht_y[row][col] = y[index[col]];
+			bacht_x[row][col] = x[index[col]];
+			// printf("%d . y:%lf--->x:%lf\n",index[col], bacht_y[row][col], bacht_x[row][col]);
+
+		}
+
+
+	}
+	ret_vec[0] = bacht_y;
+	ret_vec[1] = bacht_x;
+	// for (size_t t = 0; t < n; t++) {
+	// 	printf("\n%d\n", index[t]);
+	// }
+	return ret_vec ;
+}
+
+void randomize(int *array, int n) {
+    // srand(time(NULL));
+    int i;
+    for(i = n-1; i > 0; i--) {
+        int j = rand() % (i+1);
+        int t = array[j];
+        array[j] = array[i];
+        array[i] = t;
+    }
+}
+
+
+void plot_error_iter(double *e)
+{
+	char * commandsForGnuplot[] = {"set title \"TITLEEEEE\"", "plot 'data.temp' w l"};
+	FILE * temp = fopen("data.temp", "w");
+	FILE * gnuplotPipe = popen ("gnuplot -persistent", "w");
+
+	for (int i=0; i < EPOCHS; i++)
+	{
+		fprintf(temp, "%lf %lf \n", (double)i , e[i]); //Write the data to a temporary file
+	}
+
+	for (int i=0; i < NUM_COMMANDS; i++)
+	{
+		fprintf(gnuplotPipe, "%s \n", commandsForGnuplot[i]); //Send commands to gnuplot one by one.
+	}
+}
+
 
 
 double **allocate_dynamic_float_matrix(int row, int col)
@@ -137,37 +216,4 @@ void deallocate_dynamic_float_matrix(float **matrix, int row)
         free(matrix[i]);
     }
     free(matrix);
-}
-
-
-double ***bacht_data(double *y, double *x , int bacht_size, int n)
-{
-
-	int num_bacht, i = -1;
-	num_bacht = n / bacht_size;
-	double **bacht_y = allocate_dynamic_float_matrix(num_bacht, bacht_size);
-	double **bacht_x = allocate_dynamic_float_matrix(num_bacht, bacht_size);
-	double ***ret_vec = malloc(sizeof(float**)*2);
-
-	for(int row = 0 ; row < num_bacht ; row++)
-	{
-
-		for( int col = 0 ; col < bacht_size;  col++)
-		{
-			i = i + 1;
-			bacht_y[row][col] = y[i];
-			bacht_x[row][col] = x[i];
-
-		}
-
-
-	}
-	ret_vec[0] = bacht_y;
-	ret_vec[1] = bacht_x;
-
-	return ret_vec ;
-
-
-
-
 }

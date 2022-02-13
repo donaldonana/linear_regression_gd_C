@@ -1,43 +1,66 @@
+//
 // #include <stdio.h>
 // #include <stdlib.h>
-// #include "utils.h"
+// #include <time.h>
+//
+// void swap(int *a, int *b) {
+//     int temp = *a;
+//     *a = *b;
+//     *b = temp;
+// }
+//
+// void randomize2(int array[], int n) {
+//     srand(time(NULL));
+//     int i;
+//     for(i = n-1; i > 0; i--) {
+//         int j = rand() % (i+1);
+//         int t = array[j];
+//         array[j] = array[i];
+//         array[i] = t;
+//     }
+// }
+//
+// int main() {
+//     int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+//     int n = sizeof(arr)/ sizeof(arr[0]);
+//     char *products[] = {
+//     "youtube", "translate", "earth", "chrome", "hangout", "drive", "maps", "blogger", "adsense", "gmail"
+//     };
+//     printf("before shuffle\n");
+//     int i;
+//     for(i=0; i<n; i++) {
+//         printf("%2d - %d\n", i+1, arr[i]);
+//     }
+//     printf("after shuffle\n");
+//     randomize2(arr, n);
+//     for(i=0; i<n; i++) {
+//         printf("%2d - %d\n", i+1, arr[i]);
+//     }
+//     return 0;
+// }
+
+
+// #include <stdlib.h>
+// #include <stdio.h>
+// #include <time.h>
+// #define NUM_POINTS 5
+// #define NUM_COMMANDS 2
 //
 // int main()
 // {
+//   srand (time(NULL));
+//   int epoch = 0 , total_epochs = 450;
+//   while(epoch < total_epochs){
 //
-//    // int loop = 500 ;
-//     // float x, alpha = 0.005 ;
-//     // x = 0.1 ;
-//     // for (int i = 0; i < loop; ++i)
-//     // {
-//     //   x = x - alpha*d_f(x);
-//     // }
 //
-// //    double y[5] = {1 , 2 , 3 , 4 };
-// //    double x[5] = {1 , 2 , 3 , 4 };
-// //
-// //    float ***bacht_datas = bacht_data(y, x , 2, 4) ;
-// //    float **bacht_y = bacht_datas[0];
-// //    float **bacht_x = bacht_datas[1];
-// //
-// //
-// // printf("%lf",bacht_y[1][1]);
-// // printf("%lf",bacht_x[1][1]);
+//     int randombacht= (rand() % 100) ;
+//     printf("-----------------------%d--------------------\n", randombacht);
 //
-// // for (int b  = 0; b < num_bacht; b++) {
-// //
-// //   printf("y = %lf",bacht_y[b][0]);
-// //   printf(" and x = %lf \n",bacht_x[b][0]);
-// //   // printf(" x[%d]:%lf , y[%d]:%lf\n", i,x[i], i,y[i]);
-// //
-// // }
-//     srand(time(NULL));
-//     int randomnumber;
-//     randomnumber = (rand() % 10) + 1;
-//     printf("%d\n", randomnumber);
-//     return 0;
+//     epoch++ ;
 //
+//   }
 // }
+
 
 
 
@@ -89,37 +112,24 @@ int main()
     **/
 
 
-    double ***bacht_datas = bacht_data(y, x , BACHT_SIZE, DATA_SIZE) ;
-    double **bacht_y = bacht_datas[0];
-    double **bacht_x = bacht_datas[1];
-
-    int num_bacht = DATA_SIZE / BACHT_SIZE ;
-    printf("(****%d****)\n", num_bacht);
-
-
-
+    // float ***bacht_datas = bacht_data(y, x , BACHT_SIZE, DATA_SIZE) ;
+    // float **bacht_y = bacht_datas[0];
+    // float **bacht_x = bacht_datas[1];
+    //
+    // int num_bacht = DATA_SIZE / BACHT_SIZE ;
 
 
     printf("Training parameters using Gradient Descent..\n\n");
 
-    srand(time(NULL));
-    int randombacht;
-    randombacht= (rand() % num_bacht);
-
-    double* y_pred = prediction(bacht_x[randombacht], theta, DATA_SIZE);
-    printf("(****%d****)\n", num_bacht);
-    cost=MSE(y_pred, bacht_y[randombacht], (int)total_samples);
+    double* y_pred = prediction(x, theta, DATA_SIZE);
+    cost=MSE(y_pred, y, (int)total_samples);
     printf("-----Initialisation with Theta0: %lf Theta1: %lf Cost: %lf-----\n", theta[0], theta[1], cost);
 
     while(epoch < total_epochs){
 
-      srand(time(NULL));
-      int randombacht;
-      randombacht= (rand() % num_bacht) ;
-
-        grad_descent(y_pred, bacht_y[randombacht], bacht_x[randombacht], theta, (double)total_samples);
-        y_pred = prediction(bacht_x[randombacht], theta, DATA_SIZE);
-        cost=MSE(y_pred, bacht_y[randombacht], (int)total_samples);
+        grad_descent(y_pred, y, x, theta, (double)total_samples);
+        y_pred = prediction(x, theta, DATA_SIZE);
+        cost=MSE(y_pred, y, (int)total_samples);
         printf("\nEpoch: %d Theta0: %lf Theta1: %lf Cost: %lf \n",epoch,theta[0],theta[1],cost);
         epoch++;
 
