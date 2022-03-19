@@ -55,10 +55,8 @@ double* prediction(double* X, double *theta, int n){
 
 	for (int i = 0; i < n; ++i)
 	{
-		Y[i] = (theta[0] + (theta[1]*X[i]));
-		// if (i<2) {
-		// 	// printf("\n theta[0]=%lf theta[1] = %lf, Xi = %lf, Yi = %lf \n", theta[0], theta[1],  X[i], 	Y[i]  );
-		// }
+		Y[i] = ( (theta[0]*X[i]) + 
+		theta[1] );
 
 	}
 
@@ -103,9 +101,9 @@ void grad_descent(double *y_pred , double *y, double *x , double *theta , double
 	// printf("(%lf)---(%lf)\n", da, db);
 
 
-	theta[0] = ( theta[0] - ((LEARNING_RATE)*da) );
-	theta[1] = ( theta[1] - ((LEARNING_RATE)*db) );
-	printf("Theta0: %lf Theta1: %lf",theta[0],theta[1]);
+	theta[0] = ( theta[0] - ((LEARNING_RATE)*db) );
+	theta[1] = ( theta[1] - ((LEARNING_RATE)*da) );
+	//printf("Theta0: %lf Theta1: %lf",theta[0],theta[1]);
 
 }
 
@@ -121,7 +119,6 @@ double ***bacht_data(double *y, double *x , int bacht_size, int n)
 	for (int k = 0;  k < n; k++) {
 		index[k] = k ;
 	}
-
 
 	randomize(index, n);
 
@@ -152,7 +149,6 @@ double ***bacht_data(double *y, double *x , int bacht_size, int n)
 }
 
 void randomize(int *array, int n) {
-    // srand(time(NULL));
     int i;
     for(i = n-1; i > 0; i--) {
         int j = rand() % (i+1);
@@ -165,7 +161,7 @@ void randomize(int *array, int n) {
 
 void plot_error_iter(double *e)
 {
-	char * commandsForGnuplot[] = {"set title \"TITLEEEEE\"", "plot 'data.temp' w l"};
+	char * commandsForGnuplot[] = {"set title \"TITLE\"", "plot 'data.temp' w l"};
 	FILE * temp = fopen("data.temp", "w");
 	FILE * gnuplotPipe = popen ("gnuplot -persistent", "w");
 

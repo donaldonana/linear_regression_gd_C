@@ -54,34 +54,22 @@ int main()
 
   int num_bacht = DATA_SIZE / BACHT_SIZE ;
   printf("Training parameters using Gradient Descent..\n\n");
-  double ***bacht_datas = bacht_data(y, x , BACHT_SIZE, DATA_SIZE) ;
-  printf("Training parameters using Gradient Descent..\n\n");
-  double **bacht_y = bacht_datas[0];
-  double **bacht_x = bacht_datas[1];
+  
+  printf("******%d***********\n", BACHT_SIZE);
 
-//
-//       for (int i = 0; i < 200; i++) {
-//         printf("%d. %lf----->%lf\n",i ,Y[i] , X[i] );
-//       }
-//
-//       printf("================================================================>\n");
-// }
-      // for (int i = 0; i < 50; i++) {
-      //   printf("%d.  %lf----->%lf\n",i,bacht_y[1][i] , bacht_x[1][i] );
-      // }
-
-
+  int conteur = 0;
     while(epoch < total_epochs){
 
-      bacht_datas = bacht_data(y, x , BACHT_SIZE, DATA_SIZE);
-      bacht_y = bacht_datas[0];
-      bacht_x = bacht_datas[1];
-      // for (int i = 0; i < num_bacht; i++) {
-      y_pred = prediction(bacht_x[0], theta, BACHT_SIZE);
-      cost=MSE(y_pred, bacht_y[0], (double)BACHT_SIZE);
-      grad_descent(y_pred, bacht_y[0], bacht_x[0], theta, (double)BACHT_SIZE);
-      // break;
-      // }
+      double ***bacht_datas = bacht_data(y, x , BACHT_SIZE, DATA_SIZE) ;
+      double **bacht_y = bacht_datas[0];
+      double **bacht_x = bacht_datas[1];
+      for (int i = 0; i < num_bacht; i++) {
+      y_pred = prediction(bacht_x[i], theta, BACHT_SIZE);
+      cost=MSE(y_pred, bacht_y[i], (double)BACHT_SIZE);
+      grad_descent(y_pred, bacht_y[i], bacht_x[i], theta, (double)BACHT_SIZE);
+      conteur = conteur  + 1 ;
+      //break;
+      }
       error[epoch] = cost;
       printf("\nEpoch: %d Theta0: %lf Theta1: %lf Cost: %lf \n",epoch,theta[0],theta[1],cost);
       epoch++;
@@ -90,9 +78,12 @@ int main()
 
 
     printf("\n\n\n Results after %d iterations",epoch);
-    printf("\n\tTheta0 (a) : %lf    Theta1 (b) :  %lf    MSE :  %lf \n", theta[0],theta[1],cost);
+    printf("\n\tTheta0 (m) : %lf    Theta1 (b) :  %lf    MSE :  %lf \n",theta[0], theta[1] ,cost);
 
-    //plot_error_iter(error);
+
+
+printf("---------------\n%d\n---------", conteur);
+    plot_error_iter(error);
 
 
 
