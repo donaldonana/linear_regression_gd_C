@@ -92,7 +92,7 @@ int main()
     printf("\n\n\n Results after %d iterations",epoch);
     printf("\n\tTheta0 (a) : %lf    Theta1 (b) :  %lf    MSE :  %lf \n", theta[0],theta[1],cost);
 
-    plot_error_iter(error);
+    //plot_error_iter(error);
 
 
 
