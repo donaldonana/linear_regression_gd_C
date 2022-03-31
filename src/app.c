@@ -59,7 +59,6 @@ int main()
 
 
 
-  int conteur = 0;
     while(epoch < total_epochs){
 
       bacht_datas = bacht_data(y, x , BACHT_SIZE, DATA_SIZE);
