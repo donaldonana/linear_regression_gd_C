@@ -1,5 +1,16 @@
-# Linear regression with gradient descent in C 
+# Linear regression with gradient descent in C and Python
 
-creer un dossier bin et obj
+## prés-requis: 
+creer un dossier bin et obj vide
 
-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
+Avoir un systéme d'exploitation Linux (préferable Ubuntu)
+
+une version assez récente de gcc
+
+## Execution en C
+
+A la racine : 
+
+make run-app pour executer app.c
+
+

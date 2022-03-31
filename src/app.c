@@ -59,6 +59,7 @@ int main()
 
 
 
+  int conteur = 0;
     while(epoch < total_epochs){
 
       bacht_datas = bacht_data(y, x , BACHT_SIZE, DATA_SIZE);
@@ -78,7 +79,9 @@ int main()
 
 
     printf("\n\n\n Results after %d iterations",epoch);
-    printf("\n\tTheta0 (a) : %lf    Theta1 (b) :  %lf    MSE :  %lf \n", theta[0],theta[1],cost);
+    printf("\n\tTheta0 (m) : %lf    Theta1 (b) :  %lf    MSE :  %lf \n",theta[0], theta[1] ,cost);
+
+
 
     plot_error_iter(error);
 

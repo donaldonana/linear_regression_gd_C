@@ -147,7 +147,7 @@ void randomize(int *array, int n) {
 
 void plot_error_iter(double *e)
 {
-	char * commandsForGnuplot[] = {"set title \"TITLEEEEE\"", "plot 'data.temp' w l"};
+	char * commandsForGnuplot[] = {"set title \"TITLE\"", "plot 'data.temp' w l"};
 	FILE * temp = fopen("data.temp", "w");
 	FILE * gnuplotPipe = popen ("gnuplot -persistent", "w");
 
