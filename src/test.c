@@ -145,3 +145,13 @@ int main()
 	return 0 ;
 
 }
+
+//
+//       for (int i = 0; i < 200; i++) {
+//         printf("%d. %lf----->%lf\n",i ,Y[i] , X[i] );
+//       }
+//
+// }
+      // for (int i = 0; i < 50; i++) {
+      //   printf("%d.  %lf----->%lf\n",i,bacht_y[1][i] , bacht_x[1][i] );
+      // }

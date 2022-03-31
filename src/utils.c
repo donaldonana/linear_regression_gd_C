@@ -56,13 +56,7 @@ double* prediction(double* X, double *theta, int n){
 	for (int i = 0; i < n; ++i)
 	{
 		Y[i] = (theta[0] + (theta[1]*X[i]));
-		// if (i<2) {
-		// 	// printf("\n theta[0]=%lf theta[1] = %lf, Xi = %lf, Yi = %lf \n", theta[0], theta[1],  X[i], 	Y[i]  );
-		// }
-
 	}
-
-
 
 	return Y;
 
@@ -86,26 +80,18 @@ void grad_descent(double *y_pred , double *y, double *x , double *theta , double
 	double da , db , diff;
 	double suma = 0.000 , sumb = 0.000 ;
 
-	// double* params = malloc(sizeof(double)*2);
-
 	for (int i = 0; i < n; ++i)
 	{
-		// printf("----%lf----\n", (y_pred[i] - y[i]));
 		diff = y[i] - y_pred[i];
 		suma = (suma + diff) ;
 		sumb = sumb + ( x[i]*(diff) );
-		// printf("%lf\n", y_pred[i]);
 	}
 
 	da = ( (-2.000/(double)n) * (suma) );
 	db = ( (-2.000/(double)n) * (sumb) );
-
-	// printf("(%lf)---(%lf)\n", da, db);
-
-
 	theta[0] = ( theta[0] - ((LEARNING_RATE)*da) );
 	theta[1] = ( theta[1] - ((LEARNING_RATE)*db) );
-	printf("Theta0: %lf Theta1: %lf",theta[0],theta[1]);
+	//printf("Theta0: %lf Theta1: %lf",theta[0],theta[1]);
 
 }
 
@@ -121,7 +107,6 @@ double ***bacht_data(double *y, double *x , int bacht_size, int n)
 	for (int k = 0;  k < n; k++) {
 		index[k] = k ;
 	}
-
 
 	randomize(index, n);
 
@@ -145,14 +130,11 @@ double ***bacht_data(double *y, double *x , int bacht_size, int n)
 	}
 	ret_vec[0] = bacht_y;
 	ret_vec[1] = bacht_x;
-	// for (size_t t = 0; t < n; t++) {
-	// 	printf("\n%d\n", index[t]);
-	// }
+	
 	return ret_vec ;
 }
 
 void randomize(int *array, int n) {
-    // srand(time(NULL));
     int i;
     for(i = n-1; i > 0; i--) {
         int j = rand() % (i+1);
