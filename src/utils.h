@@ -29,6 +29,8 @@ void plot_error_iter(double *e) ;
 
 void randomize(int *array, int n) ;
 
+void initialize_vect_zero(double *a, int n);
+
 float f( float x ) ;
 
 float d_f(float x) ;
