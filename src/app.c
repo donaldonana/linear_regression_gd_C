@@ -32,7 +32,6 @@ double cost;
 int main(int argc, char *argv[])
 {
 
-	srand(time(NULL));
   
 	load_data();
 
@@ -62,10 +61,11 @@ int main(int argc, char *argv[])
 //----------------------sequentiel---------------------------------
 void sequentiel(){
 
+	srand(time(NULL));
+
+
  	int num_bacht = DATA_SIZE / bacht_size ;
-  	printf("Training parameters using Gradient Descent..\n\n");
-  	double ***bacht_datas = bacht_data(y, x , bacht_size, DATA_SIZE) ;
-  	printf("Training parameters using Gradient Descent..\n\n");
+  	double ***bacht_datas ;
   	double **bacht_y = bacht_datas[0];
   	double **bacht_x = bacht_datas[1];
 	int epoch=0,total_epochs = EPOCHS;
@@ -95,7 +95,7 @@ void sequentiel(){
   	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
   	printf("\n\t----------terminer avec un temps t = %lf s--------------\n", time_spent);
 
-    //plot_error_iter(error);
+    plot_error_iter(error);
 
 }
 
@@ -103,6 +103,7 @@ void sequentiel(){
 
 int parallel()
 {
+
   	pthread_t threads[NUM_THREADS];
 	pthread_attr_t attr;
 	int rc;
@@ -133,50 +134,45 @@ int parallel()
 
 		}
 	}
-
 	/* Free attribute and wait for the other threads */
 	pthread_attr_destroy(&attr);
 	for(int i=0; i< NUM_THREADS; i++) {
-	rc = pthread_join(threads[i], &status);
-	if (rc) {
-	printf("ERROR; return code from pthread_join() is %d\n", rc);
-	exit(-1);
+
+		rc = pthread_join(threads[i], &status);
+		if (rc) {
+		printf("ERROR; return code from pthread_join() is %d\n", rc);
+		exit(-1);
+		}
+		//printf("Main completed join with thread %d having a status of %ld \n  ",i,(long)status);
+
 	}
-	//printf("  Main completed join with thread %d having a status of %ld \n  ",i,(long)status);
 
-}
+	printf("\n\n\n \t *****************Results after %d iterations (version parallel) ********************",EPOCHS);
+    printf("\n\n \tTheta0 (m) : %lf    Theta1 (b) :  %lf  \n",tf[0], tf[1]);
 
-printf("\n -----Main: program completed. Exiting ------\n");
-clock_t end = clock();
-double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-printf("\n----------terminer avec un temps t = %lf s--------------\n", time_spent);
-//printf("%lf", tf[0]);
-pthread_exit(NULL);
+  	clock_t end = clock();
+  	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+  	printf("\n\t----------terminer avec un temps t = %lf s--------------\n", time_spent);
+	pthread_exit(NULL);
 }
 
 int load_data()
 {
- 
-
-int count = 0;
-
-  printf("Loading Dataset from dataset/theData.csv ...\n\n");
+	int count = 0;
+  	printf("Loading Dataset from dataset/theData.csv ...\n\n");
 	FILE* stream = fopen("data/theData.csv", "r");
-  if (stream == NULL) {
-    fprintf(stderr, "Error reading file\n");
-    return 1;
-  }
-  while (fscanf(stream, "%lf,%lf", &x[count], &y[count]) == 2) {
+  	if (stream == NULL) {
+    	fprintf(stderr, "Error reading file\n");
+    	return 1;
+  	}
+  	while (fscanf(stream, "%lf,%lf", &x[count], &y[count]) == 2) {
       count = count+1;
-  }
-
+  	}
 	return 0;
     // Uncomment to display loaded data
     // for (int i = 0; i < (int)total_samples; i++) {
     //   printf(" x[%d]:%lf , y[%d]:%lf\n", i,x[i], i,y[i]);
     // }
-
-
 }
 
 

@@ -36,4 +36,4 @@ run-test: test
 	./$(BIN)/test.exe
 
 run-app: app
-	./$(BIN)/app.exe $(arg1) $(arg2) 
+	./$(BIN)/app.exe $(size) $(seq) 
